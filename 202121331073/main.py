@@ -14,7 +14,7 @@ def readfile():
     return org_data,org_add_data
 
 # jieba TF-IDF权重
-def weights(org_data,org_add_data):
+def tf_idf(org_data,org_add_data):
     org_tags = jieba.analyse.extract_tags(org_data,topK = 20,withWeight = True,allowPOS=0)
     org_add_tags = jieba.analyse.extract_tags(org_add_data,topK = 20,withWeight = True,allowPOS=0)
     return org_tags,org_add_tags
@@ -38,19 +38,27 @@ def simhash(packetlist):
         whash[i] = 1 if val>0 else 0
     return whash
     
+# Hamming距离
+def hamming(org_hash,org_add_hash):
+    ans =  0
+    for (i,j) in list(zip(org_hash,org_add_hash)):
+        ans += i ^ j
+    return 1-(ans / len(org_hash))
+
 
 org_hashlist = []
 org_add_hashlist = []
 od,oad = readfile()
-org_tag,orgadd_tag = weights(od,oad)
+org_tag,orgadd_tag = tf_idf(od,oad)
 for word,weight in org_tag:
     org_hashlist.append(MD5Hash(word))
 for word,weight in orgadd_tag:
     org_add_hashlist.append(MD5Hash(word))
-packlist = list(zip(org_add_hashlist,orgadd_tag))
-print(simhash(packlist))
-
-#精确模式
+org_plist = list(zip(org_hashlist,org_tag))
+org_add_plist = list(zip(org_add_hashlist,orgadd_tag))
+org_hash = simhash(org_plist)
+org_add_hash = simhash(org_add_plist)
+print('相似度为:',hamming(org_hash,org_add_hash))
 
 
 
