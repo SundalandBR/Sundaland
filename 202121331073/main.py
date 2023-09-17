@@ -25,17 +25,21 @@ def MD5Hash(string):
     md5.update(string.encode("utf-8"))
     return bin(int(md5.hexdigest()[8:-8],16))[2:].zfill(64) # 转化为64bit 2进制
 
+# Hash加权与合并
 
 org_hashlist = []
 org_add_hashlist = []
 od,oad = readfile()
-for n in od:
-    org_hashlist.append(MD5Hash(n))
-for n in oad:
-    org_add_hashlist.append(MD5Hash(n))
-    
+org_tag,orgadd_tag = weights(od,oad)
+for word,weight in org_tag:
+    org_hashlist.append(MD5Hash(word))
+for word,weight in orgadd_tag:
+    org_add_hashlist.append(MD5Hash(word))
+
 print(od)
 print(oad)
+print(org_hashlist)
+print(org_add_hashlist)
 
 #精确模式
 
