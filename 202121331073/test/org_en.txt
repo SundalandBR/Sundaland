@@ -1,0 +1,2 @@
+Title: Natural Language Processing Techniques based on Deep Learning
+Abstract: This paper presents the research progress of natural language processing techniques based on deep learning, including applications in word embedding, text classification, and machine translation. We propose a novel neural network model and demonstrate its effectiveness in various natural language processing tasks through experiments.
