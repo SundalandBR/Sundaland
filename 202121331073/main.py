@@ -10,14 +10,9 @@ if (sys.argv[1].endswith(".txt") and sys.argv[2].endswith(".txt") and sys.argv[3
     print("输入文件中有非txt文件")
     sys.exit(1)
 
-try:
-    org_file_path = sys.argv[1]
-    org_add_file_path = sys.argv[2]
-    ans_path = sys.argv[3]
-except Exception:
-    print('文件路径未正确输入')
-    sys.exit(-1)
-
+org_file_path = sys.argv[1]
+org_add_file_path = sys.argv[2]
+ans_path = sys.argv[3]
 sim = simhash.simhash_check(org_file_path,org_add_file_path)
 similar = sim.check()
 with open(ans_path,"w",encoding = 'utf-8') as f:
